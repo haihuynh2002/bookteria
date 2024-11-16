@@ -2,10 +2,6 @@ package com.devteria.identity.dto.request;
 
 import java.time.LocalDate;
 
-import jakarta.validation.constraints.Size;
-
-import com.devteria.identity.validator.DobConstraint;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,18 +14,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserCreationRequest {
-    @Size(min = 4, message = "USERNAME_INVALID")
-    String username;
-
-    @Size(min = 6, message = "INVALID_PASSWORD")
-    String password;
-
+public class ProfileCreationRequest {
+    String userId;
     String firstName;
     String lastName;
-
-    @DobConstraint(min = 10, message = "INVALID_DOB")
     LocalDate dob;
-
     String city;
 }

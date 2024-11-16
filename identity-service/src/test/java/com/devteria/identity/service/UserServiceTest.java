@@ -1,9 +1,8 @@
 package com.devteria.identity.service;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -57,13 +56,7 @@ public class UserServiceTest {
                 .dob(dob)
                 .build();
 
-        user = User.builder()
-                .id("cf0600f538b3")
-                .username("john")
-                .firstName("John")
-                .lastName("Doe")
-                .dob(dob)
-                .build();
+        user = User.builder().id("cf0600f538b3").username("john").build();
     }
 
     @Test
