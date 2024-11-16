@@ -48,13 +48,8 @@ public class UserServiceTest {
                 .dob(dob)
                 .build();
 
-        userResponse = UserResponse.builder()
-                .id("cf0600f538b3")
-                .username("john")
-                .firstName("John")
-                .lastName("Doe")
-                .dob(dob)
-                .build();
+        userResponse =
+                UserResponse.builder().id("cf0600f538b3").username("john").build();
 
         user = User.builder().id("cf0600f538b3").username("john").build();
     }

@@ -2,10 +2,18 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.devteria.gateway.ApiGatewayApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "IdentityServiceApplication",
             "request": "launch",
             "mainClass": "com.devteria.identity.IdentityServiceApplication",
-            "projectName": "identity-service"
+            "projectName": "identity-service",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=62467 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=identity-service"
         },
         {
             "type": "java",
@@ -14,6 +22,16 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.devteria.profile.ProfileServiceApplication",
             "projectName": "profile-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.devteria.gateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }
