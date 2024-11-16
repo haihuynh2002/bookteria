@@ -1,5 +1,7 @@
 package com.devteria.profile.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +25,10 @@ public class UserProfileController {
     @GetMapping("/{id}")
     public ResponseEntity<UserProfileResponse> getUserProfile(@PathVariable String id) {
         return ResponseEntity.ok().body(userProfileService.getUserProfile(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserProfileResponse>> getUserProfiles() {
+        return ResponseEntity.ok().body(userProfileService.getUserProfiles());
     }
 }
