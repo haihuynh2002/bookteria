@@ -1,14 +1,18 @@
 package com.devteria.gateway.configuration;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -22,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
 
@@ -30,6 +35,14 @@ import reactor.core.publisher.Mono;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
 public class AuthenticationFilter implements GlobalFilter, Ordered {
+
+    @NonFinal
+    public static String[] PUBLIC_POST_ENPOINTS = {"/identity/auth/.*", "/identity/users"};
+
+    @NonFinal
+    @Value("${app.api-prefix}") 
+    String apiPrefix;
+
     IdentityService identityService;
     ObjectMapper objectMapper;
 
@@ -40,6 +53,10 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        if(isPublicEnpoint(exchange.getRequest())) {
+           return chain.filter(exchange);
+        }
+
         List<String> authHeaders = exchange.getRequest().getHeaders().get(HttpHeaders.AUTHORIZATION);
         if(Objects.isNull(authHeaders) || CollectionUtils.isEmpty(authHeaders)) {
             return unauthenticated(exchange.getResponse());
@@ -55,7 +72,7 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
     }
 
     Mono<Void> unauthenticated(ServerHttpResponse response) {
-        ApiResponse apiResponse = ApiResponse.builder()
+        ApiResponse<Void> apiResponse = ApiResponse.<Void>builder()
         .code(1401)
         .message("unauthenticated")
         .build();
@@ -74,4 +91,9 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         );
     }
 
+    private boolean isPublicEnpoint(ServerHttpRequest request) {
+        return request.getMethod().equals(HttpMethod.POST)
+        ? Arrays.stream(PUBLIC_POST_ENPOINTS).anyMatch(enpoint -> request.getURI().getPath().matches(apiPrefix + enpoint))
+        : false;
+    }
 }
