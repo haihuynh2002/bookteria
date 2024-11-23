@@ -1,4 +1,4 @@
-package com.devteria.profile.configuration;
+package com.devteria.notification.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

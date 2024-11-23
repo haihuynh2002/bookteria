@@ -1,4 +1,4 @@
-package com.devteria.profile.exception;
+package com.devteria.notification.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

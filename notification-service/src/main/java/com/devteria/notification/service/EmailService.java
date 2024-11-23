@@ -1,28 +1,32 @@
-package com.devteria.profile.service;
+package com.devteria.notification.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.devteria.profile.dto.request.EmailRequest;
-import com.devteria.profile.dto.request.SendEmailRequest;
-import com.devteria.profile.dto.request.Sender;
-import com.devteria.profile.dto.response.EmailResponse;
-import com.devteria.profile.repository.httpclient.EmailClient;
+import com.devteria.notification.dto.request.EmailRequest;
+import com.devteria.notification.dto.request.SendEmailRequest;
+import com.devteria.notification.dto.request.Sender;
+import com.devteria.notification.dto.response.EmailResponse;
+import com.devteria.notification.repository.httpclient.EmailClient;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class EmailService {
     EmailClient emailClient;
 
     @NonFinal
-    String apiKey = "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";
+    @Value("${notification.email.brevo-api-key}")
+    String apiKey;
 
     public EmailResponse sendEmail(SendEmailRequest request) {
         var sender = Sender.builder()

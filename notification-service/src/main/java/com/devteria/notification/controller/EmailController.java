@@ -1,14 +1,13 @@
-package com.devteria.profile.controller;
+package com.devteria.notification.controller;
 
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.devteria.profile.dto.ApiResponse;
-import com.devteria.profile.dto.request.SendEmailRequest;
-import com.devteria.profile.dto.response.EmailResponse;
-import com.devteria.profile.service.EmailService;
+import com.devteria.notification.dto.ApiResponse;
+import com.devteria.notification.dto.request.SendEmailRequest;
+import com.devteria.notification.dto.response.EmailResponse;
+import com.devteria.notification.service.EmailService;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +27,5 @@ public class EmailController {
                 .result(emailService.sendEmail(request))
                 .build();
         return response;
-    }
-
-    @KafkaListener(topics = "onboard-successful")
-    public void listener(String message) {
-        log.info("received message: " + message);
     }
 }

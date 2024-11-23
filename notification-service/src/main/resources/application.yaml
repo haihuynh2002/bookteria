@@ -11,7 +11,14 @@ spring:
   kafka:
     bootstrap-servers: localhost:9094
     consumer:
-      group-id: notification-group1
+      group-id: notification-group
       auto-offset-reset: earliest
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
+
+notification:
+  email:
+    brevo-url: https://api.brevo.com
+    brevo-api-key: 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

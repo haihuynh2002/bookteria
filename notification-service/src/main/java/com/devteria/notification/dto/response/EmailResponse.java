@@ -1,4 +1,4 @@
-package com.devteria.profile.dto.request;
+package com.devteria.notification.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,6 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Sender {
-    String name;
-    String email;
+public class EmailResponse {
+    String messageId;
 }
