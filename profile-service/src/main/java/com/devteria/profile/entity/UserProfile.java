@@ -28,6 +28,7 @@ public class UserProfile {
     String id;
 
     String userId;
+    String username;
     String firstName;
     String lastName;
     String email;

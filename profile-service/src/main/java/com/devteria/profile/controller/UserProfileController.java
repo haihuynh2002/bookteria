@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.devteria.profile.dto.response.ApiResponse;
 import com.devteria.profile.dto.response.UserProfileResponse;
 import com.devteria.profile.service.UserProfileService;
 
@@ -18,7 +19,7 @@ import lombok.experimental.FieldDefaults;
 @Controller
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@RequestMapping("/users")
+@RequestMapping("/internal/users")
 public class UserProfileController {
     UserProfileService userProfileService;
 
@@ -30,5 +31,12 @@ public class UserProfileController {
     @GetMapping
     public ResponseEntity<List<UserProfileResponse>> getUserProfiles() {
         return ResponseEntity.ok().body(userProfileService.getUserProfiles());
+    }
+
+    @GetMapping("/users/{userId}")
+    public ApiResponse<UserProfileResponse> getByUserId(@PathVariable String userId) {
+        return ApiResponse.<UserProfileResponse>builder()
+                .result(userProfileService.getByUserId(userId))
+                .build();
     }
 }

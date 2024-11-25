@@ -40,4 +40,9 @@ public class UserProfileService {
                 .map(userProfileMapper::toUserProfileResponse)
                 .toList();
     }
+
+    public UserProfileResponse getByUserId(String userId) {
+        return userProfileMapper.toUserProfileResponse(
+                userProfileRepository.findByUserId(userId).orElseThrow(() -> new RuntimeException("user not found")));
+    }
 }

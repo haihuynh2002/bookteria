@@ -16,12 +16,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.devteria.post.dto.ApiResponse;
 import com.devteria.post.dto.request.PostRequest;
 import com.devteria.post.dto.response.PageResponse;
 import com.devteria.post.dto.response.PostResponse;
+import com.devteria.post.dto.response.UserProfileResponse;
 import com.devteria.post.entity.Post;
 import com.devteria.post.mapper.PostMapper;
 import com.devteria.post.repository.PostRepository;
+import com.devteria.post.repository.httpclient.ProfileClient;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,7 @@ public class PostService {
     PostRepository postRepository;
     PostMapper postMapper;
     DateTimeFormatter dateTimeFormatter;
+    ProfileClient profileClient;
     
     public PostResponse createPost(PostRequest request) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,9 +48,11 @@ public class PostService {
         return postMapper.toPostResponse(postRepository.save(post));
     }
 
-    public PageResponse getMyPosts(int page, int size) {
+    public PageResponse<PostResponse> getMyPosts(int page, int size) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         var userId = auth.getName();
+
+        final UserProfileResponse userProfile = profileClient.getProfile(userId).getResult();
 
         Sort sort = Sort.by("createdDate").descending();
         Pageable pageable = PageRequest.of(page - 1, size, sort);
@@ -55,6 +61,7 @@ public class PostService {
         var postList = pageData.getContent().stream().map(post -> {
             var postResponse = postMapper.toPostResponse(post);
             postResponse.setCreated(dateTimeFormatter.format(post.getCreatedDate()));
+            postResponse.setUsername(userProfile.getUsername());
             return postResponse;
         }).toList();
 
