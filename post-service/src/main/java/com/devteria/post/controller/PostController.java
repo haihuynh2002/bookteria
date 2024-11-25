@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.devteria.post.dto.ApiResponse;
 import com.devteria.post.dto.request.PostRequest;
+import com.devteria.post.dto.response.PageResponse;
 import com.devteria.post.dto.response.PostResponse;
 import com.devteria.post.service.PostService;
 
@@ -36,9 +37,11 @@ public class PostController {
     }
 
     @GetMapping("/my-posts")
-    public ApiResponse<List<PostResponse>> getMyPosts() {
-        return ApiResponse.<List<PostResponse>>builder()
-        .result(postService.getMyPosts())
+    public ApiResponse<PageResponse> getMyPosts(
+        @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+        @RequestParam(value = "size", required = false, defaultValue = "1") int size) {
+        return ApiResponse.<PageResponse>builder()
+        .result(postService.getMyPosts(page, size))
         .build();
     }
     
