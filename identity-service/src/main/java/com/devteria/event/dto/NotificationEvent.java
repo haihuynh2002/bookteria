@@ -1,6 +1,6 @@
-package com.devteria.profile.dto.response;
+package com.devteria.event.dto;
 
-import java.time.LocalDate;
+import java.util.Map;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,14 +10,15 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileResponse {
-    String firstName;
-    String lastName;
-    String email;
-    LocalDate dob;
-    String city;
+public class NotificationEvent {
+    String channel;
+    String recipient;
+    String templateCode;
+    Map<String, Object> param;
+    String subject;
+    String body;
 }

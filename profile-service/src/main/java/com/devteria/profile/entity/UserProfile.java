@@ -30,6 +30,7 @@ public class UserProfile {
     String userId;
     String firstName;
     String lastName;
+    String email;
     LocalDate dob;
     String city;
 }

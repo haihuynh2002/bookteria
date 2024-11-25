@@ -52,6 +52,26 @@
             "projectName": "notification-service",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NotificationServiceApplication<notification-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.devteria.notification.NotificationServiceApplication",
+            "projectName": "notification-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PostServiceApplication<post-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.devteria.post.PostServiceApplication",
+            "projectName": "post-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

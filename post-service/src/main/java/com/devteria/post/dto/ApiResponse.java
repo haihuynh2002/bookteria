@@ -1,7 +1,6 @@
-package com.devteria.profile.dto.response;
+package com.devteria.post.dto;
 
-import java.time.LocalDate;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,14 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileResponse {
-    String firstName;
-    String lastName;
-    String email;
-    LocalDate dob;
-    String city;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ApiResponse<T> {
+    @Builder.Default
+    private int code = 1000;
+
+    private String message;
+    private T result;
 }

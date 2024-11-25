@@ -18,6 +18,7 @@ public class ProfileCreationRequest {
     String userId;
     String firstName;
     String lastName;
+    String email;
     LocalDate dob;
     String city;
 }

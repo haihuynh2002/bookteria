@@ -1,6 +1,4 @@
-package com.devteria.profile.dto.response;
-
-import java.time.LocalDate;
+package com.devteria.post.dto.response;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,15 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.Instant;
+
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserProfileResponse {
-    String firstName;
-    String lastName;
-    String email;
-    LocalDate dob;
-    String city;
+public class PostResponse {
+    String id;
+    String content;
+    String userId;
+    Instant createdDate;
+    Instant modifiedDate;
 }
